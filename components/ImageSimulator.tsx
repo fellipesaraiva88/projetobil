@@ -67,33 +67,33 @@ export const ImageSimulator: React.FC<ImageSimulatorProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+      {/* Only show header if closed (modal mode) or if we want a consistent header */}
       <div className="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
         <div>
           <h3 className="font-bold text-slate-800 flex items-center gap-2">
             <Wand2 size={20} className="text-indigo-500" />
-            Simulador de Cores
+            Visualizar Resultado
           </h3>
-          <p className="text-xs text-slate-500">Veja como a obra vai ficar antes de pintar</p>
         </div>
         {onClose && (
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">Fechar</button>
         )}
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="p-6 space-y-6">
         {/* Image Upload Area */}
         {!image ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
              <div 
               onClick={() => cameraInputRef.current?.click()}
-              className="bg-indigo-50 border-2 border-dashed border-indigo-200 rounded-xl p-8 text-center cursor-pointer hover:bg-indigo-100 transition-colors flex flex-col items-center justify-center h-48"
+              className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-2 border-dashed border-indigo-200 rounded-2xl p-10 text-center cursor-pointer hover:shadow-md transition-all active:scale-95 flex flex-col items-center justify-center min-h-[240px]"
             >
-              <div className="bg-indigo-200 p-4 rounded-full mb-4">
-                <Camera size={40} className="text-indigo-700" />
+              <div className="bg-white p-5 rounded-full mb-5 shadow-sm">
+                <Camera size={48} className="text-indigo-600" />
               </div>
-              <p className="font-bold text-indigo-900">Tirar Foto</p>
-              <p className="text-sm text-indigo-600">Usar a câmera</p>
+              <p className="font-bold text-xl text-indigo-900 mb-1">Tirar Foto Agora</p>
+              <p className="text-indigo-600">Use a câmera do celular</p>
               <input 
                 ref={cameraInputRef}
                 type="file" 
@@ -106,13 +106,13 @@ export const ImageSimulator: React.FC<ImageSimulatorProps> = ({ onClose }) => {
 
             <div 
               onClick={() => fileInputRef.current?.click()}
-              className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-8 text-center cursor-pointer hover:bg-slate-100 transition-colors flex flex-col items-center justify-center h-48"
+              className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center cursor-pointer hover:bg-slate-100 transition-all active:scale-95 flex flex-col items-center justify-center min-h-[240px]"
             >
-              <div className="bg-slate-200 p-4 rounded-full mb-4">
-                <ImageIcon size={40} className="text-slate-600" />
+              <div className="bg-white p-5 rounded-full mb-5 shadow-sm">
+                <ImageIcon size={48} className="text-slate-500" />
               </div>
-              <p className="font-bold text-slate-800">Galeria</p>
-              <p className="text-sm text-slate-500">Escolher foto</p>
+              <p className="font-bold text-xl text-slate-800 mb-1">Galeria</p>
+              <p className="text-slate-500">Escolher foto antiga</p>
               <input 
                 ref={fileInputRef}
                 type="file" 
@@ -125,45 +125,48 @@ export const ImageSimulator: React.FC<ImageSimulatorProps> = ({ onClose }) => {
         ) : (
           <div className="space-y-6">
             {/* Preview Area */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="relative group">
-                <span className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm z-10">Original</span>
-                <img src={image} alt="Original" className="w-full h-56 object-cover rounded-lg border border-slate-200 bg-slate-100" />
+                <span className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-md backdrop-blur-sm z-10">Foto Original</span>
+                <img src={image} alt="Original" className="w-full h-64 object-cover rounded-xl border border-slate-200 shadow-sm bg-slate-100" />
                 <button 
                   onClick={() => { setImage(null); setResultImage(null); }}
-                  className="absolute top-2 right-2 bg-white/90 p-2 rounded-full shadow-sm hover:bg-white z-10"
-                  title="Nova Foto"
+                  className="absolute top-3 right-3 bg-white/90 p-2 rounded-full shadow-sm hover:bg-white z-10 text-slate-700 transition-colors"
+                  title="Trocar Foto"
                 >
-                  <RefreshCw size={18} className="text-slate-600" />
+                  <RefreshCw size={20} />
                 </button>
               </div>
 
               <div className="relative">
                 {resultImage ? (
-                 <div className="relative animate-in fade-in zoom-in duration-300">
-                  <span className="absolute top-2 left-2 bg-indigo-600/80 text-white text-xs px-2 py-1 rounded backdrop-blur-sm z-10">Resultado</span>
-                  <img src={resultImage} alt="Editada" className="w-full h-56 object-cover rounded-lg border border-indigo-200 shadow-md bg-slate-100" />
+                 <div className="relative animate-in fade-in zoom-in duration-500">
+                  <span className="absolute top-3 left-3 bg-indigo-600/90 text-white text-xs px-2 py-1 rounded-md backdrop-blur-sm z-10 shadow-sm">Como vai ficar</span>
+                  <img src={resultImage} alt="Editada" className="w-full h-64 object-cover rounded-xl border-2 border-indigo-500 shadow-lg bg-slate-100" />
                   <a 
                     href={resultImage} 
                     download="simulacao-bill-pinturas.png"
-                    className="absolute bottom-2 right-2 bg-indigo-600 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700 z-10"
+                    className="absolute bottom-3 right-3 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 z-10 transition-transform hover:scale-105"
                     title="Baixar Imagem"
                   >
-                    <Download size={18} />
+                    <Download size={20} />
                   </a>
                 </div>
                 ) : (
-                  <div className="flex items-center justify-center h-56 bg-slate-50 rounded-lg border border-dashed border-slate-300 text-slate-400">
+                  <div className="flex items-center justify-center h-64 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 text-slate-400">
                     {isLoading ? (
-                      <div className="text-center">
-                        <Loader2 size={32} className="animate-spin mx-auto mb-3 text-indigo-500" />
-                        <span className="text-sm font-medium text-slate-600 block">Preparando a tinta...</span>
-                        <span className="text-xs text-slate-400">Isso leva alguns segundos</span>
+                      <div className="text-center p-6">
+                        <div className="relative mx-auto mb-4 w-16 h-16">
+                           <div className="absolute inset-0 border-4 border-indigo-100 rounded-full"></div>
+                           <div className="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"></div>
+                        </div>
+                        <span className="text-lg font-bold text-indigo-800 block mb-1">Pintando...</span>
+                        <span className="text-sm text-slate-500">A inteligência artificial está trabalhando</span>
                       </div>
                     ) : (
-                      <div className="text-center px-4">
-                        <Palette size={32} className="mx-auto mb-2 opacity-50" />
-                        <span className="text-sm">Escolha uma cor abaixo</span>
+                      <div className="text-center px-6">
+                        <Palette size={48} className="mx-auto mb-3 opacity-30" />
+                        <p className="text-slate-500 font-medium">Selecione uma cor abaixo para ver a mágica acontecer</p>
                       </div>
                     )}
                   </div>
@@ -172,26 +175,26 @@ export const ImageSimulator: React.FC<ImageSimulatorProps> = ({ onClose }) => {
             </div>
 
             {/* Controls */}
-            <div className="bg-slate-50 p-4 rounded-xl">
-              <label className="block text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                <Palette size={16} />
-                Opções de Pintura
+            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+              <label className="block text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                <Palette size={18} className="text-indigo-500" />
+                Escolha a Tinta ou Acabamento
               </label>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
                 {PAINT_PRESETS.map((preset) => (
                   <button 
                     key={preset.name}
                     onClick={() => handleGenerate(preset.prompt)}
                     disabled={isLoading}
                     className={`
-                      p-3 rounded-lg text-sm font-medium transition-all border text-left
+                      p-3 rounded-xl text-sm font-medium transition-all border text-left relative overflow-hidden
                       ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-95'}
-                      bg-white border-slate-200 hover:border-indigo-300 hover:shadow-sm
+                      bg-white border-slate-200 hover:border-indigo-400 hover:shadow-md
                     `}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className={`w-4 h-4 rounded-full border border-slate-200 shadow-sm`} 
+                    <div className="flex items-center gap-3 relative z-10">
+                      <div className={`w-6 h-6 rounded-full border border-slate-200 shadow-sm`} 
                            style={{ 
                              backgroundColor: preset.name.includes('Branco') ? '#ffffff' : 
                                             preset.name.includes('Cinza') ? '#9ca3af' :
@@ -201,29 +204,29 @@ export const ImageSimulator: React.FC<ImageSimulatorProps> = ({ onClose }) => {
                                             '#fbbf24' 
                            }} 
                       />
-                      {preset.name}
+                      <span className="text-slate-700">{preset.name}</span>
                     </div>
                   </button>
                 ))}
               </div>
 
-              <div className="border-t border-slate-200 pt-3 mt-3">
-                <label className="text-xs text-slate-500 font-medium mb-2 block">Ou descreva o que você quer:</label>
+              <div className="border-t border-slate-200 pt-4">
+                <label className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2 block">Outro Pedido</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="Ex: Parede rústica laranja..."
-                    className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                    placeholder="Ex: Parede de tijolinho aparente..."
+                    className="flex-1 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-shadow"
                     onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
                   />
                   <button
                     onClick={() => handleGenerate()}
                     disabled={isLoading || !prompt}
-                    className="bg-slate-800 text-white px-4 py-2 rounded-lg font-medium hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-slate-800 text-white px-5 py-2 rounded-xl font-medium hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-95 transition-all"
                   >
-                    <ArrowRight size={18} />
+                    <ArrowRight size={20} />
                   </button>
                 </div>
               </div>

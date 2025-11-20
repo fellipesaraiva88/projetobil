@@ -66,7 +66,7 @@ export const generateEditedImage = async (
             },
           },
           {
-            text: `Apply the following modification to the room/wall in the image: ${prompt}. Maintain photorealism.`, 
+            text: `Apply the following modification to the room/wall in the image: ${prompt}. Maintain photorealism. Keep the furniture and structure intact, only change the wall surface/color.`, 
           },
         ],
       },
