@@ -1,0 +1,8 @@
+{
+  "name": "Bill Pinturas - Gestão",
+  "description": "Sistema simples e intuitivo para gestão de obras de pintura, materiais e pagamentos.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
